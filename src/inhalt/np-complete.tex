@@ -1,0 +1,106 @@
+\section*{NP Complete}
+\begin{itemize}
+    \item decision problem: problem that could be posed as yes no question - need to convert optimization problems into yes/no problems for NP proof\\
+    $\longrightarrow$ "maximizing ..." $~=$ "... with size of at least $k$" \\
+    $\longrightarrow$ "minimizing ..." $~=$ "... with size of at most $k$"
+    \item let $\textbf P$ denotes set of decision problems where there's a known polynomial time algorithm
+    \item efficient certifiers: an algo B is an efficient certifier for problem X if it can take a possible result and verify if it satisfy X in poly time
+    \item let $\textbf{NP}$ denote set of problems for which we do not know if there's a poly-time algorithm. An algorithm X is in NP if there's an efficient certifier for it 
+    \item \textbf{NP-Complete} are questions in NP but not P. So we don't know if there's an efficient algo. A decision problem X is in \textbf{NP-Complete} if: 
+    \begin{itemize}[leftmargin = 1em]
+        \item $X \in NP$, and
+        \item $ Y \leq_p X,~ \forall Y \in NP$ (generalized to any (one) $Y \in NP$) 
+        \item $Y \leq_p X$ means that there's a poly-time reduction from Y to X, or "X is at least as hard as Y"
+    \end{itemize}
+    \item it's obvious that $\textbf {P } \subseteq \textbf{ NP}$
+    \item if $Z \leq_p Y$ and $Y \leq_p X$, then $Z \leq_p X$
+    \item if $Y \leq_p X$ and $X \in P$, then $Y \in P$\\
+    $\longrightarrow$ if $Y \leq_p X$ and $Y \not \in P$, then $X \not \in P$ (contrapsitive)
+    \item \textbf{NP-Hard}: like NP-Complete but you drop the first requirement, you don't know it's in NP, just that it can be reduced from a problem in NP
+    \item steps to NP-Complete proof
+    \begin{enumerate}
+        \item Show that there exist an efficient certifier for X (if answer is yes, then there's a proof of this fact that can be verified in P)
+        \item Pick a known NP-Complete problem Y and specify how to reduce Y to X 
+        \item Prove that reduction is correct \\
+        $\longrightarrow$ meaning (yes instance in Y $\Longleftrightarrow$ yes instance in X)
+    \end{enumerate}
+    \item \textbf{\ul{aside - recall Bipartite Graph}:} A graph is Bipartite if you can partition $V$ into $V_1$ and $V_2$ such that there are no adjacent edges in $V_1$ and no adjacent edges in $V_2$ (likewise, if vertices are adjacent, they're in different sets). 
+    \begin{itemize}[leftmargin = 1em]
+        \item graph is bipartite if it's 2-colorable and has no odd cycles
+    \end{itemize}
+\end{itemize}
+% \vfill \null\columnbreak
+\subsection*{Important Problems}
+The following pairs of NP-complete problems are of type $\{$\textcolor{teal}{\textbf{packing}}, \textcolor{Bittersweet}{\textbf{covering}}, \textcolor{Blue}{\textbf{partitioning problems}}, \textcolor{Magenta}{\textbf{sequencing}}, \textcolor{ForestGreen}{\textbf{numerical}}$\}$
+%maybe colour code these%
+\begin{itemize}
+    \item \textcolor{teal}{\textbf{\ul{Independent Set}}}: For a graph $G = (V,E)$, a subset of vertices $S \subseteq V$ is independent if no vertices in S are joined by any edge. \ul{Given a graph $G$ and $k \in \mathbb{N}$ does $G$ contain an independent set of size $k$ or larger }
+    \item \textcolor{teal}{\textbf{\ul{Set Packing}}}: Given an $n$-element set $U$,  a collection of subsets $\{S_1, S_2, \ldots, S_m \} \subset U$ and $k \in \mathbb{N}$, does there exists a collection of at least $k$ of those sets with property that no two of them intersect
+    %insert set packing example here
+    
+    \item \textcolor{Bittersweet}{\textbf{\ul{Vertex Cover}}}: For a graph $G = (V, E)$, a subset of vertices $S \subseteq V$ is a vertex cover if every edge $e \in E$ has at least one endpoints in S. \ul{Given a graph $G$ and $k \in \mathbb{N}$, does G contain a vertex cover of size $k$ or smaller}
+    %insert vertex cover and independent set example here
+    \item \textcolor{Bittersweet}{\textbf{\ul{Set Cover}}}: Given an $n$-element set $U$, a collection of subsets $\{S_1, S_2, \ldots, S_m\} \subset U$ \& a number $k$, is there a collection of at most $k$ of those sets whose union is equal to U.
+    
+    \item \textcolor{Blue}{\textbf{\ul{3D Matching}}}: Given 3 disjoint sets, $X, Y, Z$, is there a set $T \subseteq X \times Y \times Z$ such that each elements of $U \cup Y \cup Z$ is contained exactly once in these triples
+    \begin{itemize}[leftmargin = 1em]
+        \item ex. $X = \{\text{instructors}\}, Y = \{\text{courses}\}, Z = \{\text{time slots}\}$
+        \item is a special case of Set Cover, we're looking to cover the ground set $U = X \cup Y \cup Z$ using at most $n$ sets from $X \times Y \times Z$ 
+        \item is a special case of Set Packing, since we're looking for $n$ disjoint subsets of ground set $U = X \cup Y \cup Z$
+        \item Bipartite Matching (aka 2D matching): Given 2 Bipartite sets $U$ and $V$ find the maximum matching
+        \begin{itemize}[leftmargin = 1em]
+            \item ex. $U = \{readers\}, V = \{books\}$ and $(u,v)$ is book $v$ person $u$ willing to read $\rightarrow $ solve in $O(mn)$ time
+        \end{itemize}
+    \end{itemize}
+    \item \textcolor{Blue}{\textbf{\ul{Graph Coloring}}}: A graph $G = (V,E)$ is said to be k-colorable if the endpoints of any edges $(u,v)$ can be coloured using diff colors when there's $k$ available colours. \ul{Given a graph $G$ and $k$, does $G$ have k-coloring?} 
+    \begin{itemize}
+        \item proof of NP-completeness is reduced from 3-SAT $\rightarrow$ that's why 2-colorable $\in P$
+    \end{itemize}
+    
+    \item \textcolor{Magenta}{\textbf{\ul{Hamiltonian Cycle}}}: A simple cycle is a cycle in a graph with no repeated vertices (a cycle is permutation $\{v_1, v_2, \ldots, v_n \}$ with a pair $v_j = v_k$ but $j \neq k$. \ul{Given an undirected graph $G = (V,E)$, can you a simple cycle that visits every node $v \in V$}
+    \item \textcolor{Magenta}{\textbf{\ul{Traveling Salesman}}}: A tour is a path that starts at city $C_1$ and visits every city exactly once and ends at $C_1$ again. \ul{Given a set of $ \{C_1, C_2, \ldots, C_n\}$, with list of costs where $c_{ij}$ of traveling from $C_i$ to $C_j$ and a number $k$, is there a tour with costs at most $k$}
+    
+    \item \textcolor{ForestGreen}{\textbf{\ul{Subset Sum}}}: Given a set of natural number $V = \{v_1, v_2 \ldots, v_n\}$ and a number $k$. Is there a subset $U \subseteq V$ such that sum of $U$ equals $k$?
+    \item \textcolor{ForestGreen}{\textbf{\ul{Set Partition}}}: Given a set of $n$ integers $V = \{v_1, v_2, \ldots, v_n\}$, can elements of $V$ be partitioned into two sets $U$ and $(U-V)$ such that $\sum_{u \in U} u_i = \sum_{u \in (V-U)} u_i$?
+    
+    \item \textcolor{BrickRed}{\textbf{special, 3-SAT}}: all clauses are of length 3 with $n$ literals, of the form below. \ul{Given a SAT instance, could you create a truth assignment $T = \{t_1, t_2, \ldots, t_n\}, ~ t_i \in \{0, 1\}$} that satisfies the instance \\
+    $\longrightarrow \text{ ex. } (x_1 \lor \bar x_2 \lor x_3) \cap (x_4 \lor x_5 \lor x_6)$\\
+    $\longrightarrow$ 2-SAT $\in P$
+    \item \textcolor{BrickRed}{\textbf{special, clique}}: For a graph $G = (V, E)$, a subset of vertices $S \subseteq V$ is a clique if every pair of vertices in V is joined by an edge (so find a complete subgraph basically). \ul{Given a graph $G$ and $k$, does $G$ contain a clique of size at least $k$?}
+    \item \textbf{\ul{note}}: 3-SAT $\leq$ Independent Set $\leq$ Vertex Cover $\leq$ Set Cover
+\end{itemize}
+
+
+\subsection*{Example Reduction}
+\subsubsection*{Independent Set $<_p $ Vertex Cover}
+\ul{\textbf{1. Vertex Cover $\in$ NP}} \\
+Given a solution set $S$, for every vertex in $S$, delete all adjacent edges from the graph's edge set $E$. At the end, if $E$ is empty, it was a vertex cover. If we use adjacency lists, runtime is $O(m) \subseteq O(n^2)$ - \medskip so it's in poly-time, thus vertex cover $\in$ NP. \\
+\ul{\textbf{2. Reduction}}: \\
+From diagram below, we can see that independent set and vertex cover problems are complements of each other. So for a graph $G = (V,E)$ with $n$ vertices, and independent set $S$ of size $k$ produces and vertex cover of $(V - S)$ of size $n - k$. So no changes necessary \medskip for the graph itself, just pass $k' = n - k$ into \Colorbox{mygray}{\lstinline|VertexCover(G, k)|}\\
+\ul{\textbf{3. Proposition}}: Set $S$ is an independent set iff its complement $V - S$ is a vertex cover\\
+\ul{$\Longrightarrow:$} Proceed by contradiction and suppose $S$ is an independent set, yet $V -S$ is not a vertex cover. That means there's an edge $e = (u,v) \in E$  such that neither endpoints are in $(V-S)$ - so $u,v \not \in (V-S)$. But then that means that $u, v \in S$, but then $S$ is not an independent set. $\blacksquare$ \\
+\ul{$\Longleftarrow$:} Proceed by contradiction and suppose $(V-S)$ is a vertex cover, but $S$ is not an independent set. So there must be an edge $e = (u,v) \in E$ such that both $u,v \in S$. But that means that $u, v \not \in V-S$, so $e$ is an edge with no end point in $(V-S)$ and so $(V-S)$ is not a vertex cover. $\blacksquare$
+
+
+\subsubsection*{Hamiltonian Path $\leq$ The Traveling Salesman}
+\ul{\textbf{1. TSP $\in$ NP}}\\
+Given a possible solution set of vertices $S$, check that $S$ is a tour by removing every $v \in S$ from $V$ (if $v \in V$, if $v \not \in V$ that means that we've traveled to that city twice, reject) and that $(v_i, v_{i+1}) \in E$. We can also keep track of total cost of every $(v_i, v_{i+1}) \in S$ At the end, $V$ should be empty and the sum of cost should be $k$. We could check \medskip all this in $O(n)$ so TSP $\in$ NP. \\
+\\
+\ul{\textbf{2. The Reduction}}\\
+For an instance $G = (V, E)$ with $|V| = n$ of \Colorbox{mygray}{\lstinline|HamCycle|}, we'll make a new instance $I_G$. In $I_G$, we'll turn every node $i \in V$ to corresponding cities $C_i$ in \Colorbox{mygray}{\lstinline|TSP|}. We then can create edges between all cities (make a complete graph, not a requirement in TSP but for our case we want this) make set the weights of $(C_i, C_j) = 1$ if $(i, j) \in E$, otherwise, the cost is 2. We also set the new $k' = n$ (set it to $n$ because we want to reach every node) and feed that into TSP. Creating a new list of cities can be done in $O(n)$ time and if we're using adjacency lists for the edges, we can set all edges to 2 in $O(n^2)$ and change all edges that exist in $E$ to 1 in also $O(n^2)$ times. So total time of \medskip reduction is $O(n^2)$ \\
+\ul{\textbf{3. Proposition:}} Show that your reduction is correct, that is $G$ is a Yes-instance of HamCycle iff $I_G$ is a Yes-instance of TSP\\
+\ul{$\Longleftarrow$}: Suppose that $I_G$ is a Yes-instance of TSP, so there's a tour of the cities that cost at most $k = n$. Let $\{C_{i1}, C_{i2}, \ldots, C_{in}\}$ be successive cities on this tour. Then the cost is 1 to get from any city to the next conseuctive city in the tour, and also the cost is 1 to get back from the last to the first (if any of the cost was 2, the total would be at least $n+1$). The reduction forces the fact that inter-city costs are 1 iff there's an edge in $E$ between the corresponding nodes in $G$, so $E$ must contain $(i_n, i_1)$ as well as $(i_j, i_{j+1})$ for $1 \leq j \leq n-1$. So if we take the corresponding nodes, the permutation $\{i_1, i_2, \ldots, i_n\}$ is a Hamiltonian cycle of $G$ and $G$ is a Yes-instance \\
+\ul{$\Longrightarrow$}: Suppose G is a Yes-instance, with Hamiltonian cylce $i_1, i_2, \ldots, i_n$. Then the reduction guarantees that Cities $C_{i1}, C_{i2}, \ldots, C_{in}$ form a tour where the cost from one city to the next is 1, and the cost of getting back from the last city to the first is also 1. So, $I_G$ has a tour of cost $n$ and so is a Yes-instance of the TSP problem 
+
+
+% \subsubsection*{Subset Sum $\leq$ Set Partition}
+% \ul{\textbf{1. Set Partition $\in$ NP}} \\
+% Given sets $A$ and $B$, to check that they are partitions of $U$, we need to check $A \cup B = U$, $A \cap B = \varnothing$ and $\sum_{a_i \in A} a_i = \sum_{b_i \in B} b_i$. To check first requirement (the union), add $A$ and $B$ to a set and check if that's equal to $U \longrightarrow$ would take $O(n\log n)$ because need to sort the sets to compare. For the second, put elements of $A$ into hashsets and check every element of $B$ to see if it's already in there. Thirdly, we can compute the sum as we go along doing the last step $\longrightarrow$ both these things take $O(n)$. So checking takes $O(n\log n) \subset O(n^2)$. Thus \medskip Set Partition $\in $ NP.\\
+% \ul{\textbf{2. The Reduction}} \\
+% The intution is that for a set $V$, $\sum_{v_i \in V} v_i = s \in \mathbb{Z}$. If we successfully partition $V$ into $U$ and $U-V$, then $\sum_{u_i \in U} u_i = \sum_{u_i \in (V-U)} u_i = s/2$. Then, if we wanted it look for a partition that sum to $k$, we need all elements in V to sum to $2k$ - can do this by adding a integer $t$ to $V$ with value $(2k-s)$. \\
+% So, given a set $V$, for a set $V' = V \cup \{2k-s\}$ and feed $V'$ into \Colorbox{mygray}{\lstinline|SubsetCover(V)|}. This will return 2 subsets, both of which sum to $k$, pick the one without $2k-s$. The reduction takes polynomial \medskip time because you're just adding an element.\\
+% % insert picture 
+% \ul{\textbf{3. Proposition}}: Let $V = \{v_1, v_2, \ldots, v_n\}$ and $k \in \mathbb{Z}$. \textbf{Prove that an instance is Yes instance in the Subset Sum problem iff it's a Yes instance in Set Partition} \\
+% \ul{$\Longrightarrow$}: Suppose that $I$ is a Yes-instance in \Colorbox{mygray}{\lstinline|SubsetSum|}. This means that there's a subset $W \subseteq V$ such that $\sum_{w_i \in W} w_i = k$. Let $\sum_{v_i \in V} v_i = s \in \mathbb{Z}$ and let $V' = V \cup \{2k - s\}$, we will feed $V'$ into \Colorbox{mygray}{\lstinline|SetPartition|}. Consider sets $W$ and $V' - W$, we need to show that these 2 sets are the partition of $V'$ that will give us the right answer. \\
+% First, we have $W \cup (V' - W) = V'$ and $W \cap (V' - W) = \varnothing$ via definition of complement. Since $\sum_{v'_i \in V'} v'_i = s + (2k-s) = 2k$ and $\sum_{w_i \in W} w_i = k$, this must mean $\sum_{w_i \in (V'-W)} w_i$. Therefore, we have $\sum_{w_i \in W} w_i = \sum_{w_i \in (V'-W)} w_i$ as required. So we have a Yes instance in \Colorbox{mygray}{\lstinline|SetPartition|} as well. $\blacksquare$ \\
+% \ul{$\Longleftarrow$}: Suppose there's a partition of $V'$, $U$ and $V' - U$. Because of the nature of $V'$ and set partition, we know $\sum_{u_i \in U} u_i = \sum_{u_i \in (V' - U)} u_i = k$. We also have the fact that they are disjoint, so $2k -s$ belongs to just one of the sets. WLOG, assume that set is $V'-U$, then $U$ is the subset of $V$ that we're looking for. And so we have a Yes instance in \Colorbox{mygray}{\lstinline|SubsetSum|} as well

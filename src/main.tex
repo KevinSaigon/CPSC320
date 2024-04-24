@@ -1,0 +1,67 @@
+\documentclass[10pt,landscape,a4paper, fleqn, dvipsnames]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[LY1,T1]{fontenc}
+%\usepackage{frutigernext}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0.8cm,bottom=0.8cm,left=0.75cm,right=1cm]{geometry}
+% \usepackage[top=1cm,bottom=1cm,left=0.75cm,right=1cm]{geometry} for pages 4
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\usepackage{enumitem}
+\setlist{nolistsep, leftmargin = 1em}
+\setlist[2]{nolistsep, leftmargin = 1.5em}
+% \setlist{nolistsep}
+% \setlist{leftmargin = 1em}
+\renewcommand{\labelitemii}{$\circ$}
+
+\usepackage{xcolor}
+% \usepackage[dvipsnames]{xcolor}
+\definecolor{mygray}{rgb}{0.8,0.8,0.8}
+\usepackage{listings}
+\lstset{%
+basicstyle=\ttfamily,
+breaklines = true,
+backgroundcolor=\color{mygray},
+}
+\usepackage{realboxes}
+\usepackage{soul}
+% \usepackage[fleqn]{amsmath}
+
+
+\let\bar\overline
+
+\include{inhalt/def}
+
+\begin{document}
+%\footnotesize
+
+% \setlength{\abovedisplayskip}{0pt}
+% \setlength{\belowdisplayskip}{0pt}
+% \setlength{\abovedisplayshortskip}{0pt}
+% \setlength{\belowdisplayshortskip}{0pt}
+
+\small
+\begin{multicols*}{3}
+\input{inhalt/smp}
+\input{inhalt/runtime analysis}
+\input{inhalt/graph}
+\input{inhalt/divide and conquer}
+\input{inhalt/dynamic programming}
+\input{inhalt/np-complete}
+
+
+% we want less spaces between items
+\end{multicols*}
+\end{document}
